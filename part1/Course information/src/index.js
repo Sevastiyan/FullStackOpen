@@ -23,14 +23,14 @@ const Part = (props) => {
 	)
 }
 
-const sum = function(array){
-	return array[0].exercises + array[1].exercises + array[2].exercises
-}
-
 const Total = (props) => {
 	return(
 		<p>Number of exercises {sum(props.parts)}</p>
 	)
+}
+
+const sum = array => {
+	return array[0].exercises + array[1].exercises + array[2].exercises
 }
 
 const App = () => {

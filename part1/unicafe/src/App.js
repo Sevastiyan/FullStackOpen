@@ -2,7 +2,11 @@ import { useState } from 'react';
 
 const Header = () => <h1>Give Feedback</h1>;
 
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
+const Button = ({ onClick, text }) => ( 
+  <button onClick={onClick}>
+    {text}
+  </button>
+)
 
 const Statistics = ({ good, neutral, bad }) => {
   const sum = good + neutral + bad;

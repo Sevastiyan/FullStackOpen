@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Contacts = ({ contacts }) => {
   return (
@@ -52,22 +53,29 @@ const Form = ({ onSubmit, name, number, nameHandler, phoneHandler }) => {
 };
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 },
-  ]);
-
+  const [persons, setPersons] = useState([ ]);
   const [query, setQuery] = useState('');
   const [newName, setNewName] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [filter, setFilter] = useState(persons);
 
+  const hook = () => {
+    axios.get('http://localhost:3001/persons').then(response => {
+      console.log('promise fulfilled')
+      console.log(response.data)
+      
+      setPersons(response.data)
+      setFilter(response.data)
+    })
+  }
+
+  useEffect(hook, [])
+
   const handleQuery = (event) => {
     const text = event.target.value;
     setQuery(text); // handles the text
-    setFilter(persons.filter((person) => person.name.includes(text))); // handles the filter
+    const copy = [...persons];
+    setFilter(copy.filter((person) => person.name.toLowerCase().includes(text))); // handles the filter
   };
 
   const handleContactChange = (event) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Contacts = ({ contacts, handler }) => {
+const Contacts = ({ contacts, buttonHandler }) => {
     return (
       <table>
         <tbody>
@@ -9,7 +9,7 @@ const Contacts = ({ contacts, handler }) => {
                   <td>{contact.name}</td>
                   <td>{contact.number}</td>
                   <td>
-                  <button onClick={() => handler(contact.id) }>Remove</button>
+                  <button onClick={() => buttonHandler(contact.id) }>Remove</button>
                   </td> 
                 </tr>
           ))}

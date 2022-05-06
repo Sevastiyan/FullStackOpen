@@ -3,6 +3,19 @@ import Contacts from './components/Contacts';
 import Filter from './components/Filter';
 import Form from './components/Form';
 import service from './services/service';
+import './index.css';
+
+const Notification = ({ message, type }) => {
+  if (message === null) {
+    return null;
+  }
+
+  if (type === 'error') {
+    return <div className='error'>{message}</div>;
+  } else {
+    return <div className='success'>{message}</div>;
+  }
+};
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -10,6 +23,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [filter, setFilter] = useState(persons);
+  const [notification, setNotification] = useState({});
 
   useEffect(() => {
     service.getAll().then((data) => {
@@ -18,8 +32,6 @@ const App = () => {
       setFilter(data);
     });
   }, []);
-
-  
 
   const handleQuery = (event) => {
     const text = event.target.value;
@@ -62,6 +74,23 @@ const App = () => {
             );
             setPersons(newPersons);
             setFilter(newPersons);
+
+            setNotification({
+              message: `Contact: '${response.name}' was updated`,
+              type: 'success',
+            });
+            setTimeout(() => {
+              setNotification(null);
+            }, 5000);
+          })
+          .catch((error) => {
+            setNotification({
+              message: `Person '${changedPerson.name}' was already removed from server`,
+              type: 'error',
+            });
+            setTimeout(() => {
+              setNotification(null);
+            }, 5000);
           });
         return;
       } else {
@@ -76,6 +105,13 @@ const App = () => {
       setNewPhone('');
       setPersons(copy);
       setFilter(copy);
+      setNotification({
+        message: `Contact: '${response.name}' was added`,
+        type: 'success',
+      });
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
     });
   };
 
@@ -96,6 +132,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification.message} type={notification.type} />
       <Filter value={queryText} handler={handleQuery} />
       <h2>Add New</h2>
       <Form

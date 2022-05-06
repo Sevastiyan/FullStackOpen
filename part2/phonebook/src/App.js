@@ -1,75 +1,23 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
-
-const Contacts = ({ contacts }) => {
-  return (
-    <table>
-      <tbody>
-        {contacts.map((contact) => (
-          <Contact key={contact.id} contact={contact} />
-        ))}
-      </tbody>
-    </table>
-  );
-};
-
-const Contact = ({ contact }) => {
-  const { name, number } = contact;
-  return (
-    <tr key={name}>
-      <td>{name}</td>
-      <td>{number}</td>
-    </tr>
-  );
-};
-
-const Filter = ({ value, handler }) => {
-  return (
-    <div>
-      Filter Contacts:
-      <input value={value} onChange={handler} />
-    </div>
-  );
-};
-
-const Form = ({ onSubmit, name, number, nameHandler, phoneHandler }) => {
-  return (
-    <form onSubmit={onSubmit}>
-      <div>
-        <p>
-          name:
-          <input value={name} onChange={nameHandler} />
-        </p>
-        <p>
-          number:
-          <input value={number} onChange={phoneHandler} />
-        </p>
-      </div>
-      <div>
-        <button type='submit'>add</button>
-      </div>
-    </form>
-  );
-};
+import Contacts from './components/Contacts';
+import Filter from './components/Filter';
+import Form from './components/Form';
+import service from './services/service'
 
 const App = () => {
   const [persons, setPersons] = useState([ ]);
-  const [query, setQuery] = useState('');
+  const [queryText, setQuery] = useState('');
   const [newName, setNewName] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [filter, setFilter] = useState(persons);
 
-  const hook = () => {
-    axios.get('http://localhost:3001/persons').then(response => {
-      console.log('promise fulfilled')
-      console.log(response.data)
-      
-      setPersons(response.data)
-      setFilter(response.data)
-    })
-  }
-
-  useEffect(hook, [])
+  useEffect(() => {
+    service.getAll().then(data => {
+      console.log(data)
+      setPersons(data)
+      setFilter(data)
+      })
+  }, [])
 
   const handleQuery = (event) => {
     const text = event.target.value;
@@ -90,31 +38,53 @@ const App = () => {
   const addContact = (event) => {
     event.preventDefault();
     const personObject = {
-      id: persons.length + 1,
       name: newName,
       number: newPhone,
     };
     
     const names = persons.map((person) => person.name);
     if (names.includes(newName)) {
-      const message = `${newName} already added to phonebook`;
-      console.log(message);
-
-      alert(message);
-      return;
+      const message = `${newName} already added to phonebook \n Do you wish to change?`;
+      if (window.confirm(message)) {
+        const person = persons.find(p => p.name === newName)
+        const changedPerson = { ...person, number: newPhone }
+        service.update(changedPerson.id, changedPerson).then(response => {
+          const newPersons = persons.map(person => person.id !== changedPerson.id ? person : response)
+          setPersons(newPersons)
+          setFilter(newPersons)
+        })
+        return;
+      } else {
+        return;
+      }
     }
 
-    const copy = [...persons, personObject];
-    setNewName('');
-    setNewPhone('');
-    setPersons(copy);
-    setFilter(copy);
+    service.create(personObject).then(response => {
+      const newObject = response
+      const copy = [...persons, newObject];
+      setNewName('');
+      setNewPhone('');
+      setPersons(copy);
+      setFilter(copy);
+    })
   };
+
+  const deleteContact = (id) => {
+    console.log('button clicked')
+    if (window.confirm('do you want to remove?')) {
+      service.remove(id).then(response => { console.log(response) })
+      const newArray = persons.filter(person => person.id !== id)
+      setPersons(newArray)
+      setFilter(newArray)
+    } else { 
+      return
+    }
+  }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter value={query} handler={handleQuery} />
+      <Filter value={queryText} handler={handleQuery} />
       <h2>Add New</h2>
       <Form
         onSubmit={addContact}
@@ -124,7 +94,7 @@ const App = () => {
         phoneHandler={handlePhoneChange}
       />
       <h2>Numbers</h2>
-      <Contacts contacts={filter} />
+      <Contacts contacts={filter} handler={deleteContact}/>
     </div>
   );
 };

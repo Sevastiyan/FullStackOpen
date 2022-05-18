@@ -5,7 +5,8 @@ import Form from './components/Form';
 import service from './services/service';
 import './index.css';
 
-const Notification = ({ message, type }) => {
+const Notification = ({ notification }) => {
+  const { message, type } = notification
   if (message === null) {
     return null;
   }
@@ -23,7 +24,8 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [filter, setFilter] = useState(persons);
-  const [notification, setNotification] = useState({});
+  const [notification, setNotification] = useState({message: null, type: null});
+  const defaultNotification = {message: null, type: null}
 
   useEffect(() => {
     service.getAll().then((data) => {
@@ -80,7 +82,7 @@ const App = () => {
               type: 'success',
             });
             setTimeout(() => {
-              setNotification(null);
+              setNotification(defaultNotification);
             }, 5000);
           })
           .catch((error) => {
@@ -89,7 +91,7 @@ const App = () => {
               type: 'error',
             });
             setTimeout(() => {
-              setNotification(null);
+              setNotification(defaultNotification);
             }, 5000);
           });
         return;
@@ -110,7 +112,7 @@ const App = () => {
         type: 'success',
       });
       setTimeout(() => {
-        setNotification(null);
+        setNotification(defaultNotification);
       }, 5000);
     });
   };
@@ -132,7 +134,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notification.message} type={notification.type} />
+      <Notification notification={notification} />
       <Filter value={queryText} handler={handleQuery} />
       <h2>Add New</h2>
       <Form

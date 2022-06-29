@@ -1,0 +1,19 @@
+GET http://localhost:3001/api/persons
+
+###
+GET http://sevi-phonebook-app.herokuapp.com/x
+
+###
+GET http://sevi-phonebook-app.herokuapp.com/api/persons/1
+
+###
+DELETE http://sevi-phonebook-app.herokuapp.com/api/persons/1
+
+###
+POST http://sevi-phonebook-app.herokuapp.com/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "name",
+    "number": "12344"
+}

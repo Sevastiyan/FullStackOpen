@@ -1,0 +1,23 @@
+###
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "myUsername",
+    "password": "myPassword"
+}
+
+
+###
+
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Yet Another Title",
+    "author": "Sevi Tsv",
+    "url": "Blog5",
+    "likes": 0,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im15VXNlcm5hbWUiLCJpZCI6IjYzMmQyNWZmZDVkMjBiMjk5MGEyYzBkZSIsImlhdCI6MTY2MzkxNjM5M30.EwJoSrecR7sWK31w3z1vLukxBIJ6TvFmX9ZHOKI9oMQ"
+}

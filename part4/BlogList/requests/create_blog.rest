@@ -1,0 +1,25 @@
+###
+
+POST http://localhost:3001/api/blogs HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Another Title",
+    "author": "Sevi Tsv",
+    "url": "Blog5",
+    "likes": 0,
+    "userId": "632d25ffd5d20b2990a2c0de"
+}
+
+###
+
+DELETE http://localhost:3001/api/blogs/632d52c538230ed250a543ff HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Another Title",
+    "author": "Sevi Tsv",
+    "url": "Blog5",
+    "likes": 0,
+    "userId": "632d25ffd5d20b2990a2c0de"
+}

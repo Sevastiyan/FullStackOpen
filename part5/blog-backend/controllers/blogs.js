@@ -18,7 +18,11 @@ router.post('/', async (request, response) => {
   }
 
   const user = request.user
-  const blog = new Blog({ ...request.body, user: user.id })
+  const blog = new Blog({
+    ...request.body,
+    user: user.id,
+    likes: request.body.likes ? request.body.likes : 0
+  })
 
   const savedBlog = await blog.save()
 
@@ -30,11 +34,13 @@ router.post('/', async (request, response) => {
 
 router.delete('/:id', async (request, response) => {
   const blogToDelete = await Blog.findById(request.params.id)
+  
   if (!blogToDelete ) {
     return response.status(204).end()
   }
-
+  
   if ( blogToDelete.user && blogToDelete.user.toString() !== request.user.id ) {
+    console.log('No access to Blog', blogToDelete.user);
     return response.status(401).json({
       error: 'only the creator can delete a blog'
     })

@@ -1,6 +1,19 @@
-const Blog = ({ props, handlers }) => {
-  const { username, password } = props
-  const { setUsername, setPassword, handleLogin } = handlers
+import { useState } from 'react'
+
+const Blog = ({ onSubmit: login }) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleLogin = (event) => { 
+    event.preventDefault()
+    login({
+      username: username,
+      password: password
+    })
+
+    setUsername('')
+    setPassword('')
+  }
 
   return (
     <form onSubmit={handleLogin}>

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 
 const Blog = ({ blog, isPersonal, onLike, onRemove }) => {
@@ -55,6 +56,13 @@ const Blog = ({ blog, isPersonal, onLike, onRemove }) => {
       <button onClick={() => setDetails(!details)}>view</button>
     </div>
   )
+}
+
+Blog.propTypes = { 
+  blog: PropTypes.object.isRequired,
+  isPersonal: PropTypes.bool.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired
 }
 
 export default Blog

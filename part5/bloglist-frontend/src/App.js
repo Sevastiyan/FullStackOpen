@@ -27,7 +27,7 @@ const App = () => {
     if (loggedUserJson) {
       const user = JSON.parse(loggedUserJson)
       setUser(user)
-      console.log(user);
+      console.log(user)
       blogService.setToken(user.token)
     }
   }, [])
@@ -48,9 +48,9 @@ const App = () => {
 
       blogService.setToken(user.token)
       setUser(user)
-    } catch {
-      notify(`Wrong Username or Password`, 'error')
-      console.log('Wrong Credentials')
+    } catch (error) {
+      notify('Wrong Username or Password', 'error')
+      console.log('Wrong Credentials', error)
     }
   }
 
@@ -60,7 +60,7 @@ const App = () => {
       notify(`A new blog ${blogObject.title} has been added`)
       setBlogs([...blogs, blog])
     } catch (error) {
-      notify(`Title or Url missing`, 'error')
+      notify('Title or Url missing', 'error')
       console.log('Error: ', error)
     }
   }
@@ -72,7 +72,7 @@ const App = () => {
       setBlogs(
         blogs.map((blog) => (blog.id !== likedBlog.id ? blog : likedBlog))
       )
-    } catch {
+    } catch (error) {
       notify(`Problem with like ${blogObject}`, 'error')
     }
   }
@@ -81,10 +81,8 @@ const App = () => {
     try {
       const removedBlog = await blogService.deleteBlog(blogObject)
       console.log(removedBlog)
-      setBlogs(
-        blogs.filter((blog) => (blog.id !== blogObject.id))
-      )
-    } catch {
+      setBlogs(blogs.filter((blog) => blog.id !== blogObject.id))
+    } catch (error) {
       notify(`Problem with like ${blogObject}`, 'error')
     }
   }

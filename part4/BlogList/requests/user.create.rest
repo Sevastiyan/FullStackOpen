@@ -1,0 +1,31 @@
+###
+POST http://localhost:3001/api/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "myUsername",
+    "name": "My Name",
+    "password": "myPassword"
+}
+
+
+###
+POST http://localhost:3001/api/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "anotherUser",
+    "name": "Another Name",
+    "password": "anotherPassword"
+}
+
+
+###
+POST http://localhost:3001/api/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "thirdUser",
+    "name": "Third Name",
+    "password": "trhirdPassword"
+}

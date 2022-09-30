@@ -1,0 +1,20 @@
+###
+GET  http://localhost:3001/api/blogs/ HTTP/1.1
+content-type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im15VXNlcm5hbWUiLCJpZCI6IjYzMmQyNWZmZDVkMjBiMjk5MGEyYzBkZSIsImlhdCI6MTY2MzkxNjM5M30.EwJoSrecR7sWK31w3z1vLukxBIJ6TvFmX9ZHOKI9oMQ"
+}
+
+###
+
+DELETE http://localhost:3001/api/blogs/632d5e5a1adf2fa4c72c2c22 HTTP/1.1
+content-type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im15VXNlcm5hbWUiLCJpZCI6IjYzMmQyNWZmZDVkMjBiMjk5MGEyYzBkZSIsImlhdCI6MTY2MzkxNjM5M30.EwJoSrecR7sWK31w3z1vLukxBIJ6TvFmX9ZHOKI9oMQ"
+}
+
+###
+DELETE http://localhost:3001/api/blogs/all HTTP/1.1
+content-type: application/json

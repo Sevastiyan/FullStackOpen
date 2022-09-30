@@ -3,8 +3,6 @@ import { useState } from 'react'
 
 const Blog = ({ blog, isPersonal, onLike, onRemove }) => {
   const [details, setDetails] = useState(false)
-  console.log(blog.user)
-  console.log(isPersonal)
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -25,18 +23,18 @@ const Blog = ({ blog, isPersonal, onLike, onRemove }) => {
 
   if (details) {
     return (
-      <div style={blogStyle}>
-        <p>
+      <div style={blogStyle} className='blogDetails'>
+        <p className='title'>
           Title: {blog.title}
           <button onClick={() => setDetails(!details)}>hide</button>
         </p>
-        <p>Author: {blog.author}</p>
+        <p className='author'>Author: {blog.author}</p>
         <p>
           Likes: {blog.likes}
           <button onClick={() => increaseLike(blog)}>like</button>
         </p>
 
-        <p>url: {blog.url}</p>
+        <p className='url'>url: {blog.url}</p>
         <div>
           {isPersonal ? (
             <div>
@@ -51,7 +49,7 @@ const Blog = ({ blog, isPersonal, onLike, onRemove }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {blog.title} {blog.author}
       <button onClick={() => setDetails(!details)}>view</button>
     </div>

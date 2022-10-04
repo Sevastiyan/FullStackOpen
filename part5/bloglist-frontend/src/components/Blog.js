@@ -23,7 +23,7 @@ const Blog = ({ blog, isPersonal, onLike, onRemove }) => {
 
   if (details) {
     return (
-      <div style={blogStyle} className='blogDetails'>
+      <div id='blog' style={blogStyle} className='blogDetails'>
         <p className='title'>
           Title: {blog.title}
           <button onClick={() => setDetails(!details)}>hide</button>

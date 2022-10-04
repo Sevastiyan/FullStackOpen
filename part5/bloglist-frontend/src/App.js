@@ -94,7 +94,12 @@ const App = () => {
   }
 
   if (user === null) {
-    return <LoginForm onSubmit={handleLogin} />
+    return (
+      <div>
+        <Notification notification={notification} />
+        <LoginForm onSubmit={handleLogin} />
+      </div>
+    )
   }
 
   return (
@@ -104,7 +109,7 @@ const App = () => {
         <Notification notification={notification} />
         <p>
           Logged in as {user.name}
-          <button onClick={handleLogOut}>logout</button>
+          <button id='logout-button' onClick={handleLogOut}>logout</button>
         </p>
         <Togglable buttonLabel="New Blog">
           <BlogForm createBlog={handleCreateBlog} />

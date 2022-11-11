@@ -46,13 +46,34 @@ Extensive Testing of `Node.js` Applicaitons and user administration with token b
 
 [Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part4)
 
-## Part 5 [](https://fullstackopen.com/en/part5)
+- [bloglist - backend]
+
+## Part 5 - 🧪 [Testing React apps](https://fullstackopen.com/en/part5)
+
+Token based authentication and testing React components using _Jest_, _React Testing Library_ and _Cypress_ for End to End testing.
+
 [Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part5)
 
-## Part 6 [](https://fullstackopen.com/en/part6)
+- [bloglist - frontend]
+
+## Part 6 - [State Management with Redux](https://fullstackopen.com/en/part6)
+
+Introduction of Redux for more complex state management of React Applications. Covering _immutability_, _global store_, _actions_, _reducers_ and integration with _hooks_. Also touches on using old `connect` higher order component for older codebases. To handle asyncronous code, `redux thunk` is also introduced.
+
 [Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part6)
 
+- [unicafe-redux]
+- [redux-anecdotes]
+
 ## Part 7 [](https://fullstackopen.com/en/part7)
+
+- [routed-anecdotes]
+- [country-hook]
+- [ultimate-hooks]
+- [bloglist-final]
+    - [bloglist-backend]
+    - [bloglist-frontend]
+
 [Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7)
 
 

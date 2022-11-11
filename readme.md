@@ -46,7 +46,7 @@ Extensive Testing of `Node.js` Applicaitons and user administration with token b
 
 [Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part4)
 
-- [bloglist - backend]
+- [bloglist - backend](https://github.com/Sevastiyan/FullStackOpen/treepart4/BlogList) - Saving user information and storing blogs as bookmarks from the internet.
 
 ## Part 5 - 🧪 [Testing React apps](https://fullstackopen.com/en/part5)
 
@@ -54,7 +54,8 @@ Token based authentication and testing React components using _Jest_, _React Tes
 
 [Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part5)
 
-- [bloglist - frontend]
+- [bloglist - backend](https://github.com/Sevastiyan/FullStackOpen/tree/part5/blog-backend) - The same bloglist backend from Part4
+- [bloglist - frontend](https://github.com/Sevastiyan/FullStackOpen/tree/part5/bloglist-frontend) - Creating the frontend of the application that is handled by the backend from Part4. 
 
 ## Part 6 - [State Management with Redux](https://fullstackopen.com/en/part6)
 
@@ -62,15 +63,15 @@ Introduction of Redux for more complex state management of React Applications. C
 
 [Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part6)
 
-- [unicafe-redux]
-- [redux-anecdotes]
+- [unicafe-redux](https://github.com/Sevastiyan/FullStackOpen/tree/main/part6/unicafe-redux) - State management using Redux on the application from Part1.
+- [redux-anecdotes](https://github.com/Sevastiyan/FullStackOpen/tree/main/part6/redux-anecdotes) - State management using Redux on the application from Part1.
 
-## Part 7 [](https://fullstackopen.com/en/part7)
+## Part 7 [React router, custom hooks, styling applications](https://fullstackopen.com/en/part7)
 
-- [routed-anecdotes]
-- [country-hook]
-- [ultimate-hooks]
-- [bloglist-final]
+- [routed-anecdotes](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7/routed-anecdotes)
+- [country-hook](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7/country-hook)
+- [ultimate-hooks](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7/ultimate-hooks)
+- [bloglist-final]()
     - [bloglist-backend]
     - [bloglist-frontend]
 

@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { notify } from './reducers/notificationReducer'
+
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
@@ -6,20 +9,18 @@ import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { initializeBlogs, updateBlogs } from './reducers/blogReducer'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState(null)
+  const dispatch = useDispatch()
+
+  const blogs = useSelector((state) => {
+    return state.blogs
+  })
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => {
-      setBlogs(
-        blogs.sort((a, b) => {
-          return a.likes < b.likes
-        })
-      )
-    })
+    dispatch(initializeBlogs())
   }, [])
 
   useEffect(() => {
@@ -32,13 +33,6 @@ const App = () => {
     }
   }, [])
 
-  const notify = (message, type = 'info') => {
-    setNotification({ message, type })
-    setTimeout(() => {
-      setNotification(null)
-    }, 5000)
-  }
-
   const handleLogin = async (userInput) => {
     console.log(userInput)
     try {
@@ -48,19 +42,30 @@ const App = () => {
 
       blogService.setToken(user.token)
       setUser(user)
+      dispatch(notify({ message: `Welcome ${user.username}` }, 5))
     } catch (error) {
-      notify('Wrong Username or Password', 'error')
+      dispatch(
+        notify({ message: 'Wrong Username or Password', type: 'error' }, 3)
+      )
       console.log('Wrong Credentials', error)
     }
   }
 
   const handleCreateBlog = async (blogObject) => {
     try {
-      const blog = await blogService.postBlog(blogObject)
-      notify(`A new blog ${blogObject.title} has been added`)
-      setBlogs([...blogs, blog])
+      const newBlog = await blogService.postBlog(blogObject)
+      dispatch(
+        notify(
+          {
+            message: `A new blog ${blogObject.title} has been added`,
+            type: '',
+          },
+          2
+        )
+      )
+      dispatch(updateBlogs([...blogs, newBlog]))
     } catch (error) {
-      notify('Title or Url missing', 'error')
+      dispatch(notify({ message: 'Title or Url missing', type: 'error' }, 3))
       console.log('Error: ', error)
     }
   }
@@ -69,11 +74,13 @@ const App = () => {
     try {
       blogObject.likes = blogObject.likes + 1
       const likedBlog = await blogService.updateBlog(blogObject)
-      setBlogs(
+      dispatch(updateBlogs(
         blogs.map((blog) => (blog.id !== likedBlog.id ? blog : likedBlog))
-      )
+      ))
     } catch (error) {
-      notify(`Problem with like ${blogObject}`, 'error')
+      dispatch(
+        notify({ message: `Problem with like ${blogObject}`, type: 'error' }, 3)
+      )
     }
   }
 
@@ -81,9 +88,13 @@ const App = () => {
     try {
       const removedBlog = await blogService.deleteBlog(blogObject)
       console.log(removedBlog)
-      setBlogs(blogs.filter((blog) => blog.id !== blogObject.id))
+      dispatch(
+        updateBlogs(blogs.filter((blog) => blog.id !== blogObject.id))
+      )
     } catch (error) {
-      notify(`Problem with like ${blogObject}`, 'error')
+      dispatch(
+        notify({ message: `Problem with like ${blogObject}`, type: 'error' }, 3)
+      )
     }
   }
 
@@ -96,7 +107,7 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <Notification notification={notification} />
+        <Notification />
         <LoginForm onSubmit={handleLogin} />
       </div>
     )
@@ -106,10 +117,12 @@ const App = () => {
     <div>
       <div>
         <h2>Blogs</h2>
-        <Notification notification={notification} />
+        <Notification />
         <p>
           Logged in as {user.name}
-          <button id='logout-button' onClick={handleLogOut}>logout</button>
+          <button id="logout-button" onClick={handleLogOut}>
+            logout
+          </button>
         </p>
         <Togglable buttonLabel="New Blog">
           <BlogForm createBlog={handleCreateBlog} />

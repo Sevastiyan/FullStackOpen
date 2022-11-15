@@ -1,10 +1,18 @@
-const Notification = ({ notification }) => {
-  if (notification === null) {
-    return null
+import { useSelector } from 'react-redux'
+import '../index.css'
+
+const Notification = () => {
+
+  const notification = useSelector((state) => {
+    return state.notification
+  })
+  
+  const { message, type } = notification
+  if (message === '') {
+    return
   }
 
-  const { message, type } = notification
-  console.log(type)
+  console.log('Notificaiton type: ', type)
 
   if (type === 'error') {
     return <div className="error">{message}</div>

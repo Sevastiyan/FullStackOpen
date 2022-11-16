@@ -1,6 +1,5 @@
 import { loginUser } from '../reducers/loginReducer'
 import { useDispatch } from 'react-redux'
-import { notify } from '../reducers/notificationReducer'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -10,15 +9,7 @@ const LoginForm = () => {
     const password = event.target.password.value
     const userInput = { username, password }
     console.log(userInput)
-
-    try {
-      await dispatch(loginUser(userInput))
-    } catch (exception) {
-      dispatch(
-        notify({ message: 'Wrong Username or Password', type: 'error' }, 3)
-      )
-      console.log('Wrong Credentials', exception)
-    }
+    dispatch(loginUser(userInput))
   }
 
   return (

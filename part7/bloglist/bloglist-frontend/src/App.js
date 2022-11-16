@@ -24,7 +24,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeBlogs())
-    console.log('User', user)
   }, [dispatch])
 
   const handleCreateBlog = async (blogObject) => {

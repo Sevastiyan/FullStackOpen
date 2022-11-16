@@ -1,69 +1,30 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { notify } from './reducers/notificationReducer'
 import { logoutUser } from './reducers/loginReducer'
-
-import Blog from './components/Blog'
-import BlogForm from './components/BlogForm'
+import { initializeBlogs } from './reducers/blogReducer'
+import { initializeUsers } from './reducers/usersReducer'
 import LoginForm from './components/LoginForm'
-import Togglable from './components/Togglable'
 import Notification from './components/Notification'
-
-import {
-  initializeBlogs,
-  createBlog,
-  likeBlog,
-  removeBlog,
-} from './reducers/blogReducer'
+import { Routes, Route, Link, useMatch } from 'react-router-dom'
+import BlogList from './components/BlogList'
+import Users from './components/Users'
+import User from './components/User'
 
 const App = () => {
   const dispatch = useDispatch()
-  const { blogs, user } = useSelector((state) => {
+  const { user, users } = useSelector((state) => {
     return state
   })
 
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   }, [dispatch])
 
-  const handleCreateBlog = async (blogObject) => {
-    try {
-      dispatch(createBlog(blogObject))
-      dispatch(
-        notify(
-          {
-            message: `A new blog ${blogObject.title} has been added`,
-            type: '',
-          },
-          2
-        )
-      )
-    } catch (error) {
-      dispatch(notify({ message: 'Title or Url missing', type: 'error' }, 3))
-      console.log('Error: ', error)
-    }
-  }
-
-  const handleLike = async (blogObject) => {
-    console.log('🚀 ~ file: App.js ~ line 49 ~ blogObject', blogObject)
-    try {
-      dispatch(likeBlog(blogObject))
-    } catch (error) {
-      dispatch(
-        notify({ message: `Problem with like ${blogObject}`, type: 'error' }, 3)
-      )
-    }
-  }
-
-  const handleRemove = async (blogObject) => {
-    try {
-      dispatch(removeBlog(blogObject))
-    } catch (error) {
-      dispatch(
-        notify({ message: `Problem with like ${blogObject}`, type: 'error' }, 3)
-      )
-    }
-  }
+  const match = useMatch('/users/:id')
+  const userToDisplay = match
+    ? users.find((u) => u.id === match.params.id)
+    : null
 
   const handleLogOut = () => {
     dispatch(logoutUser())
@@ -81,27 +42,28 @@ const App = () => {
   return (
     <div>
       <div>
+        <div>
+          <Link style={{ padding: 5 }} to="/">
+            home
+          </Link>
+          <Link style={{ padding: 5 }} to="/users">
+            users
+          </Link>
+        </div>
         <Notification />
-        <h2>Blogs</h2>
+        <h2>Blogs App</h2>
         <p>
           Logged in as {user.name}
           <button id="logout-button" onClick={handleLogOut}>
             logout
           </button>
         </p>
-        <Togglable buttonLabel="New Blog">
-          <BlogForm createBlog={handleCreateBlog} />
-        </Togglable>
-        <br />
-        {blogs.map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            onLike={handleLike}
-            isPersonal={blog.user.username === user.username}
-            onRemove={handleRemove}
-          />
-        ))}
+        <Routes>
+          <Route path="/" element={<BlogList />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<User user={userToDisplay} />} />
+          <Route path="/blogs/:id" element={<Blog />} />
+        </Routes>
       </div>
     </div>
   )

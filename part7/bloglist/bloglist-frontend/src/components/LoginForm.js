@@ -1,19 +1,24 @@
-import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { loginUser } from '../reducers/loginReducer'
+import { useDispatch } from 'react-redux'
+import { notify } from '../reducers/notificationReducer'
 
-const Blog = ({ onSubmit: login }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleLogin = (event) => { 
+const LoginForm = () => {
+  const dispatch = useDispatch()
+  const handleLogin = async (event) => {
     event.preventDefault()
-    login({
-      username: username,
-      password: password
-    })
+    const username = event.target.username.value
+    const password = event.target.password.value
+    const userInput = { username, password }
+    console.log(userInput)
 
-    setUsername('')
-    setPassword('')
+    try {
+      await dispatch(loginUser(userInput))
+    } catch (exception) {
+      dispatch(
+        notify({ message: 'Wrong Username or Password', type: 'error' }, 3)
+      )
+      console.log('Wrong Credentials', exception)
+    }
   }
 
   return (
@@ -21,30 +26,28 @@ const Blog = ({ onSubmit: login }) => {
       <div>
         Username:{''}
         <input
-          id='username'
+          id="username"
           type="text"
-          value={username}
+          // value={username}
           name="Username"
-          onChange={({ target }) => setUsername(target.value)}
+          // onChange={({ target }) => setUsername(target.value)}
         />
       </div>
       <div>
         Password:{''}
         <input
-          id='password'
+          id="password"
           type="password"
-          value={password}
+          // value={password}
           name="Password"
-          onChange={({ target }) => setPassword(target.value)}
+          // onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button id='login-button' type="submit">login</button>
+      <button id="login-button" type="submit">
+        login
+      </button>
     </form>
   )
 }
 
-Blog.propTypes = { 
-  onSubmit: PropTypes.func.isRequired
-}
-
-export default Blog
+export default LoginForm

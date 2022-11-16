@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
-
+const logger = require('../utils/logger')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
@@ -20,7 +20,7 @@ router.post('/', async (request, response) => {
   const user = request.user
   const blog = new Blog({
     ...request.body,
-    user: user.id,
+    user: user,
     likes: request.body.likes ? request.body.likes : 0
   })
 
@@ -59,8 +59,8 @@ router.put('/:id', async (request, response) => {
       request.params.id, 
       blog, 
       { new: true, runValidators: true, context: 'query' }
-    )
-      
+    ).populate('user', { username: 1, name: 1 })
+  
   response.json(updatedBlog)
 })
 

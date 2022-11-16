@@ -1,59 +1,35 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { notify } from './reducers/notificationReducer'
+import { logoutUser } from './reducers/loginReducer'
 
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
-import blogService from './services/blogs'
-import loginService from './services/login'
-import { initializeBlogs, updateBlogs } from './reducers/blogReducer'
+
+import {
+  initializeBlogs,
+  createBlog,
+  likeBlog,
+  removeBlog,
+} from './reducers/blogReducer'
 
 const App = () => {
-  const [user, setUser] = useState(null)
   const dispatch = useDispatch()
-
-  const blogs = useSelector((state) => {
-    return state.blogs
+  const { blogs, user } = useSelector((state) => {
+    return state
   })
 
   useEffect(() => {
     dispatch(initializeBlogs())
-  }, [])
-
-  useEffect(() => {
-    const loggedUserJson = window.localStorage.getItem('loggedUser')
-    if (loggedUserJson) {
-      const user = JSON.parse(loggedUserJson)
-      setUser(user)
-      console.log(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
-
-  const handleLogin = async (userInput) => {
-    console.log(userInput)
-    try {
-      const user = await loginService.login(userInput)
-
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
-
-      blogService.setToken(user.token)
-      setUser(user)
-      dispatch(notify({ message: `Welcome ${user.username}` }, 5))
-    } catch (error) {
-      dispatch(
-        notify({ message: 'Wrong Username or Password', type: 'error' }, 3)
-      )
-      console.log('Wrong Credentials', error)
-    }
-  }
+    console.log('User', user)
+  }, [dispatch])
 
   const handleCreateBlog = async (blogObject) => {
     try {
-      const newBlog = await blogService.postBlog(blogObject)
+      dispatch(createBlog(blogObject))
       dispatch(
         notify(
           {
@@ -63,7 +39,6 @@ const App = () => {
           2
         )
       )
-      dispatch(updateBlogs([...blogs, newBlog]))
     } catch (error) {
       dispatch(notify({ message: 'Title or Url missing', type: 'error' }, 3))
       console.log('Error: ', error)
@@ -71,12 +46,9 @@ const App = () => {
   }
 
   const handleLike = async (blogObject) => {
+    console.log('🚀 ~ file: App.js ~ line 49 ~ blogObject', blogObject)
     try {
-      blogObject.likes = blogObject.likes + 1
-      const likedBlog = await blogService.updateBlog(blogObject)
-      dispatch(updateBlogs(
-        blogs.map((blog) => (blog.id !== likedBlog.id ? blog : likedBlog))
-      ))
+      dispatch(likeBlog(blogObject))
     } catch (error) {
       dispatch(
         notify({ message: `Problem with like ${blogObject}`, type: 'error' }, 3)
@@ -86,11 +58,7 @@ const App = () => {
 
   const handleRemove = async (blogObject) => {
     try {
-      const removedBlog = await blogService.deleteBlog(blogObject)
-      console.log(removedBlog)
-      dispatch(
-        updateBlogs(blogs.filter((blog) => blog.id !== blogObject.id))
-      )
+      dispatch(removeBlog(blogObject))
     } catch (error) {
       dispatch(
         notify({ message: `Problem with like ${blogObject}`, type: 'error' }, 3)
@@ -99,16 +67,14 @@ const App = () => {
   }
 
   const handleLogOut = () => {
-    window.localStorage.removeItem('loggedUser')
-    setUser(null)
-    blogService.setToken('')
+    dispatch(logoutUser())
   }
 
   if (user === null) {
     return (
       <div>
         <Notification />
-        <LoginForm onSubmit={handleLogin} />
+        <LoginForm />
       </div>
     )
   }
@@ -116,8 +82,8 @@ const App = () => {
   return (
     <div>
       <div>
-        <h2>Blogs</h2>
         <Notification />
+        <h2>Blogs</h2>
         <p>
           Logged in as {user.name}
           <button id="logout-button" onClick={handleLogOut}>

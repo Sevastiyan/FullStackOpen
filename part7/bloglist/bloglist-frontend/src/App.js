@@ -5,14 +5,15 @@ import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/usersReducer'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
-import { Routes, Route, Link, useMatch } from 'react-router-dom'
+import { Routes, Route, Link, useMatch, Navigate } from 'react-router-dom'
 import BlogList from './components/BlogList'
-import Users from './components/Users'
+import UserList from './components/UserList'
 import User from './components/User'
+import Blog from './components/Blog'
 
 const App = () => {
   const dispatch = useDispatch()
-  const { user, users } = useSelector((state) => {
+  const { user, users, blogs } = useSelector((state) => {
     return state
   })
 
@@ -21,9 +22,14 @@ const App = () => {
     dispatch(initializeUsers())
   }, [dispatch])
 
-  const match = useMatch('/users/:id')
-  const userToDisplay = match
-    ? users.find((u) => u.id === match.params.id)
+  const userMatch = useMatch('/users/:id')
+  const userToDisplay = userMatch
+    ? users.find((u) => u.id === userMatch.params.id)
+    : null
+
+  const blogMatch = useMatch('/blogs/:id')
+  const blogToDisplay = blogMatch
+    ? blogs.find((b) => b.id === blogMatch.params.id)
     : null
 
   const handleLogOut = () => {
@@ -49,20 +55,27 @@ const App = () => {
           <Link style={{ padding: 5 }} to="/users">
             users
           </Link>
-        </div>
-        <Notification />
-        <h2>Blogs App</h2>
-        <p>
           Logged in as {user.name}
           <button id="logout-button" onClick={handleLogOut}>
             logout
           </button>
-        </p>
+        </div>
+        <Notification />
+        <h2>Blogs App</h2>
         <Routes>
           <Route path="/" element={<BlogList />} />
-          <Route path="/users" element={<Users />} />
+          <Route path="/users" element={<UserList />} />
           <Route path="/users/:id" element={<User user={userToDisplay} />} />
-          <Route path="/blogs/:id" element={<Blog />} />
+          <Route
+            path="/blogs/:id"
+            element={
+              blogToDisplay ? (
+                <Blog blog={blogToDisplay} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
         </Routes>
       </div>
     </div>

@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { notify } from '../reducers/notificationReducer'
-import { createBlog, likeBlog, removeBlog } from '../reducers/blogReducer'
-import Blog from './Blog'
+import { createBlog } from '../reducers/blogReducer'
 import Togglable from './Togglable'
 import BlogForm from './BlogForm'
+import '../index.css'
 
 const BlogList = () => {
   const dispatch = useDispatch()
-  const { blogs, user } = useSelector((state) => {
+  const { blogs } = useSelector((state) => {
     return state
   })
 
@@ -29,41 +30,29 @@ const BlogList = () => {
     }
   }
 
-  const handleLike = async (blogObject) => {
-    try {
-      dispatch(likeBlog(blogObject))
-    } catch (error) {
-      dispatch(
-        notify({ message: `Problem with like ${blogObject}`, type: 'error' }, 3)
-      )
-    }
-  }
-
-  const handleRemove = async (blogObject) => {
-    try {
-      dispatch(removeBlog(blogObject))
-    } catch (error) {
-      dispatch(
-        notify({ message: `Problem with like ${blogObject}`, type: 'error' }, 3)
-      )
-    }
-  }
-
   return (
     <div>
       <Togglable buttonLabel="New Blog">
         <BlogForm createBlog={handleCreateBlog} />
       </Togglable>
       <br />
-      {blogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          onLike={handleLike}
-          isPersonal={blog.user.username === user.username}
-          onRemove={handleRemove}
-        />
-      ))}
+      <div>
+        {blogs.map((blog) => (
+          <div key={blog.id} className="blogList">
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <Link to={`/blogs/${blog.id}`}>
+                      <h3>{blog.title}</h3>
+                    </Link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

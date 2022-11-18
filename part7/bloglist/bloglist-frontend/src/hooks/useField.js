@@ -12,7 +12,8 @@ const useField = (type, id) => {
     type,
     placeholder: id,
     value,
-    onChange
+    onChange,
+    setValue
   }
 }
 

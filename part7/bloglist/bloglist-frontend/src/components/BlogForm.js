@@ -4,9 +4,9 @@ import useField from '../hooks/useField'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
-  const title = useField('text', 'title')
-  const author = useField('text', 'author')
-  const url = useField('text', 'url')
+  const { setValue: setTitle, ...title } = useField('text', 'title')
+  const { setValue: setAuthor, ...author } = useField('text', 'author')
+  const { setValue: setUrl, ...url } = useField('text', 'url')
 
   const handleCreateBlog = async (event) => {
     event.preventDefault()
@@ -16,6 +16,9 @@ const BlogForm = () => {
       url: url.value,
     }
     dispatch(createBlog(blog))
+    setTitle('')
+    setAuthor('')
+    setUrl('')
   }
 
   return (

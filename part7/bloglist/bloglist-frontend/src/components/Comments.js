@@ -4,14 +4,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addNewComment } from '../reducers/blogReducer'
 
 const Comments = () => {
-  const comment = useField('text')
+  const { setValue, ...comment } = useField('text')
   const { id } = useParams()
-  const blog = useSelector((state) => state.blogs).find((blog) => blog.id === id)
+  const blog = useSelector((state) => state.blogs).find(
+    (blog) => blog.id === id
+  )
   const dispatch = useDispatch()
 
   const handleCommentSubmit = async (event) => {
     event.preventDefault()
     dispatch(addNewComment(blog, comment.value))
+    setValue('')
   }
 
   return (

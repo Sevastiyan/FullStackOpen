@@ -11,7 +11,29 @@ The purpose of the app is to store blog posts off of the internet for some reaso
 | --- | --- | 
 | React-Redux | State management | 
 | React-Router | Navigation |
-| Cypress | E2e Testing |
-| 
+| Node.js | Backend |
+| Express | Requests |
+| MongoDB - Atlas | Database |
+| Cypress | E2E Testing |
+| MaterialUI | Frontent UI |
+
+
+## How to use the app
+
+Assuming that Nodejs is preinstalled on the system. If not look at the [following guide](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/)  
+
+Starting the Backend:
+
+1. Clone the library using `git clone` in a terminal with git enabled.
+2. Navigate to `./bloglist-backend/` folder and run the following commands:
+    - `npm i` will install the dependencies
+    - add the `.env` file in the directory with the necessary credentials to connect to **MongoDB - Atlas**.
+    - run `npm start` for deployment, or `npm run dev` for debugging.
+
+
+Starting the Frontend:
+2. Navigate to `./bloglist-frontend/` folder and run the following commands:
+  a. `npm i` will install the dependencies
+  b. `npm start` to start the React app
 
 ...

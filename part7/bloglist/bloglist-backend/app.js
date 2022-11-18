@@ -7,6 +7,7 @@ require('express-async-errors')
 
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
+const commentsRouter = require('./controllers/comments')
 const loginRouter = require('./controllers/login')
 const { errorHandler, userExtractor } = require('./utils/middleware')
 const logger = require('./utils/logger')
@@ -36,6 +37,7 @@ app.use(middleware.requestLogger)
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', userExtractor, blogsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/blogs', commentsRouter)
 
 app.use(errorHandler)
 

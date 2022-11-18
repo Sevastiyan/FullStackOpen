@@ -1,19 +1,22 @@
-import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { createBlog } from '../reducers/blogReducer'
+import useField from '../hooks/useField'
+import { TextField, Button } from '@mui/material'
 
-const BlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+const BlogForm = () => {
+  const dispatch = useDispatch()
+  const { setValue: setTitle, ...title } = useField('text', 'title')
+  const { setValue: setAuthor, ...author } = useField('text', 'author')
+  const { setValue: setUrl, ...url } = useField('text', 'url')
 
-  const addBlog = (event) => {
+  const handleCreateBlog = async (event) => {
     event.preventDefault()
-
-    createBlog({
-      title: title,
-      author: author,
-      url: url,
-    })
-
+    const blog = {
+      title: title.value,
+      author: author.value,
+      url: url.value,
+    }
+    dispatch(createBlog(blog))
     setTitle('')
     setAuthor('')
     setUrl('')
@@ -21,42 +24,19 @@ const BlogForm = ({ createBlog }) => {
 
   return (
     <div>
-      <br />
       <h2>Create New</h2>
-      <br />
-      <form onSubmit={addBlog}>
-        <div className='addBlog'>
-          Title: {''}
-          <input
-            id='title'
-            type="text"
-            value={title}
-            name="Title"
-            placeholder='title'
-            onChange={({ target }) => setTitle(target.value)}
-          />
+      <form onSubmit={handleCreateBlog}>
+        <div className="addBlog">
+          <TextField fullWidth variant="filled"  {...title} />
           <br />
-          Author: {''}
-          <input
-            id='author'
-            type="text"
-            value={author}
-            name="Author"
-            placeholder='author'
-            onChange={({ target }) => setAuthor(target.value)}
-          />
+          <TextField fullWidth variant="filled"   {...author} />
           <br />
-          URL: {''}
-          <input
-            id='url'
-            type="text"
-            value={url}
-            name="URL"
-            placeholder='url'
-            onChange={({ target }) => setUrl(target.value)}
-          />
+          <TextField fullWidth variant="filled"  {...url} />
         </div>
-        <button id='create-blog-button' type="sublit">Create</button>
+        <br />
+        <Button id="create-blog-button" type="sublit">
+          Create
+        </Button>
       </form>
     </div>
   )

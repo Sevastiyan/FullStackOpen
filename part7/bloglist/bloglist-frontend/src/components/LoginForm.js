@@ -1,50 +1,52 @@
-import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { loginUser } from '../reducers/loginReducer'
+import { useDispatch } from 'react-redux'
+import Togglable from '../components/Togglable'
+import CreateAccount from '../components/CreateAccount'
 
-const Blog = ({ onSubmit: login }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleLogin = (event) => { 
+const LoginForm = () => {
+  const dispatch = useDispatch()
+  const handleLogin = async (event) => {
     event.preventDefault()
-    login({
-      username: username,
-      password: password
-    })
-
-    setUsername('')
-    setPassword('')
+    const username = event.target.username.value
+    const password = event.target.password.value
+    const userInput = { username, password }
+    console.log(userInput)
+    dispatch(loginUser(userInput))
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>
-        Username:{''}
-        <input
-          id='username'
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        Password:{''}
-        <input
-          id='password'
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button id='login-button' type="submit">login</button>
-    </form>
+    <div>
+      <form onSubmit={handleLogin}>
+        <div>
+          Username:{''}
+          <input
+            id="username"
+            type="text"
+            // value={username}
+            name="Username"
+            // onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
+          Password:{''}
+          <input
+            id="password"
+            type="password"
+            // value={password}
+            name="Password"
+            // onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button id="login-button" type="submit">
+          login
+        </button>
+      </form>
+      <p>Dont Have an account?</p>
+      <Togglable buttonLabel="Create Account">
+        <CreateAccount />
+      </Togglable>
+    </div>
   )
 }
 
-Blog.propTypes = { 
-  onSubmit: PropTypes.func.isRequired
-}
-
-export default Blog
+export default LoginForm

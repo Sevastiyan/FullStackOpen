@@ -17,3 +17,13 @@
     padding: 10px;
     margin-bottom: 10px;
   }
+
+  
+.blogList {
+    padding-top: 10px;
+    padding-left: 2px;
+    background: rgb(241, 241, 241);
+    border: 2px solid;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }

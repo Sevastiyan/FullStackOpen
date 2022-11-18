@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import service from '../services/blogs'
+import { notify } from './notificationReducer'
 
 const initialState = []
 
@@ -11,10 +12,10 @@ const blogSlice = createSlice({
       console.log('setBlogs', action.payload)
       return action.payload
     },
-    add(state, action) {
+    addBlog(state, action) {
       return [...state, action.payload]
     },
-    update(state, action) {
+    updateBlog(state, action) {
       const blogToChange = action.payload
       const id = blogToChange.id
       return state.map((blog) => (blog.id !== id ? blog : blogToChange))
@@ -27,7 +28,7 @@ const blogSlice = createSlice({
   },
 })
 
-export const { setBlogs, update, remove, add } = blogSlice.actions
+export const { setBlogs, updateBlog, remove, addBlog } = blogSlice.actions
 
 export const initializeBlogs = () => {
   return async (dispatch) => {
@@ -40,13 +41,19 @@ export const createBlog = (blogObject) => {
   return async (dispatch) => {
     const newBlog = await service.postBlog(blogObject)
     console.log('🚀 newBlog', newBlog)
-    dispatch(add(newBlog))
+    dispatch(addBlog(newBlog))
+    try {
+      dispatch(notify({ message: `${blogObject.title} was added` }, 2))
+    } catch (error) {
+      dispatch(notify({ message: 'Title or Url missing', type: 'error' }, 3))
+      console.log('Error: ', error)
+    }
   }
 }
-
 export const addNewComment = (blog, comment) => {
-  return (dispatch) => {
-    dispatch(update({ ...blog, comments: [...blog.comments, comment] }))
+  return async (dispatch) => {
+    const savedComment = await service.addComment(blog.id, comment)
+    dispatch(updateBlog({ ...blog, comments: [...blog.comments, savedComment] }))
   }
 }
 
@@ -56,11 +63,11 @@ export const likeBlog = (blog) => {
       ...blog,
       likes: blog.likes + 1,
     })
-    dispatch(update(updatedBlog))
+    dispatch(updateBlog(updatedBlog))
   }
 }
 
-export const removeBlog = (blog) => {
+export const deleteBlog = (blog) => {
   return async (dispatch) => {
     await service.deleteBlog(blog)
     dispatch(remove(blog))

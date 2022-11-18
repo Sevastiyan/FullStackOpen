@@ -1,12 +1,10 @@
 const router = require('express').Router()
-const blog = require('../models/blog')
 const Blog = require('../models/blog')
 const Comment = require('../models/comment')
 const logger = require('../utils/logger')
 
 router.get('/', async (request, response) => {
   const notes = await Blog.find({})
-    .find({})
     .populate('user', { username: 1, name: 1 })
     .populate('comments', { content: 1 })
 
@@ -47,7 +45,11 @@ router.delete('/:id', async (request, response) => {
     })
   }
 
-  logger.info(blogToDelete.comments._id)
+  if (blogToDelete.comments) {
+    blogToDelete.comments.forEach(async (element) => {
+      await Comment.findByIdAndRemove(element._id)
+    })
+  }
 
   await Blog.findByIdAndRemove(request.params.id)
 

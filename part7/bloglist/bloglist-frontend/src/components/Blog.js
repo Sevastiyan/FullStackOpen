@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { likeBlog, removeBlog } from '../reducers/blogReducer'
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
 import Comments from './Comments'
 
@@ -15,8 +15,6 @@ const Blog = ({ blog }) => {
   const { user } = useSelector((store) => store)
   const isPersonal = blog.user.username === user.username
 
-
-
   const handleLike = async () => {
     try {
       dispatch(likeBlog(blog))
@@ -29,7 +27,7 @@ const Blog = ({ blog }) => {
 
   const handleRemove = async () => {
     try {
-      dispatch(removeBlog(blog))
+      dispatch(deleteBlog(blog))
     } catch (error) {
       dispatch(
         notify({ message: `Problem with like ${blog}`, type: 'error' }, 3)

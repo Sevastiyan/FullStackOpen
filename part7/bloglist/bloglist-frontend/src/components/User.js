@@ -10,6 +10,7 @@ const User = ({ user }) => {
 
   return (
     <div key={user.id}>
+      <h2>{user.username}`s saved Blogs</h2>
       {blogsToDisplay.map((blog) => (
         <div key={blog.id} className="blogList">
           <Link to={`/blogs/${blog.id}`}>

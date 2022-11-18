@@ -5,10 +5,19 @@ import { createBlog } from '../reducers/blogReducer'
 import Togglable from './Togglable'
 import BlogForm from './BlogForm'
 import '../index.css'
+import {
+  TableContainer,
+  Table,
+  TableBody,
+  Paper,
+  TableRow,
+  TableCell,
+  TableHead,
+} from '@mui/material'
 
 const BlogList = () => {
   const dispatch = useDispatch()
-  const { blogs } = useSelector((state) => {
+  const { blogs, users } = useSelector((state) => {
     return state
   })
 
@@ -30,21 +39,43 @@ const BlogList = () => {
     }
   }
 
+  const user = (blog) => {
+    const u = users.find((u) => u.id === blog.user.id)
+    return u ? u.username : ''
+  }
+
   return (
     <div>
       <Togglable buttonLabel="New Blog">
         <BlogForm createBlog={handleCreateBlog} />
       </Togglable>
-      <br />
-      <div>
-        {blogs.map((blog) => (
-          <div key={blog.id} className="blogList">
-            <Link to={`/blogs/${blog.id}`}>
-              <h3>{blog.title}</h3>
-            </Link>
-          </div>
-        ))}
-      </div>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Blog</TableCell>
+              <TableCell align="right">Author</TableCell>
+              <TableCell align="right">Likes</TableCell>
+              <TableCell align="right">Added by</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {blogs.map((blog) => (
+              <TableRow key={blog.id}>
+                <TableCell>
+                  <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                </TableCell>
+                <TableCell align="right">{blog.author}</TableCell>
+                <TableCell align="right">{blog.likes}</TableCell>
+                <TableCell align="right">
+                  <Link to={`/users/${blog.user.id}`}>{user(blog)}</Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   )
 }

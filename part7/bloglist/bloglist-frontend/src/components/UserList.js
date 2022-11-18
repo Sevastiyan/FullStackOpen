@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Table, TableBody, TableRow, TableCell, TableHead } from '@mui/material'
 
 const UserList = () => {
   const { blogs, users } = useSelector((state) => {
@@ -15,21 +16,26 @@ const UserList = () => {
   return (
     <div>
       <h2>Users</h2>
-      <table>
-        <tbody>
-          <tr>
-            <th>User</th>
-            <th>Number of blogs</th>
-          </tr>
 
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>User</TableCell>
+            <TableCell>Number of blogs</TableCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
           {users.map((user) => (
-            <tr key={user.id}>
-              <Link to={`/users/${user.id}`}>{user.username}</Link>
-              <td>{reduceBlogs(user)}</td>
-            </tr>
+            <TableRow key={user.id}>
+              <TableCell>
+                <Link to={`/users/${user.id}`}>{user.username}</Link>
+              </TableCell>
+              <TableCell>{reduceBlogs(user)}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   )
 }

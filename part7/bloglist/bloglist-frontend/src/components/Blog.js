@@ -3,14 +3,9 @@ import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
 import Comments from './Comments'
 
+import { Box, Typography, Button } from '@mui/material'
+
 const Blog = ({ blog }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-  }
   const dispatch = useDispatch()
   const { user } = useSelector((store) => store)
   const isPersonal = blog.user.username === user.username
@@ -40,25 +35,28 @@ const Blog = ({ blog }) => {
   }
 
   return (
-    <div>
-      <div id="blog" style={blogStyle} className="blogDetails">
-        <h1 className="title">Title: {blog.title}</h1>
-        <p className="author">Author: {blog.author}</p>
-        Likes: {blog.likes}
-        <button onClick={() => handleLike()}>like</button>
-        <p className="url">url: {blog.url}</p>
-        <div>
-          {isPersonal ? (
-            <div>
-              <button onClick={() => handleRemove()}>remove</button>
-            </div>
-          ) : (
-            <br />
-          )}
-        </div>
+    <Box sx={{ pb: 7 }}>
+      <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
+        {blog.title}
+      </Typography>
+      <Typography variant="subtitle1" className="author">{blog.author}</Typography>
+      <Typography className="url">url: {blog.url}</Typography>
+      <Typography>Likes: {blog.likes}</Typography>
+      <Button
+        variant="contained"
+        onClick={() => handleLike()}
+      >
+        like
+      </Button>
+      <div>
+        {isPersonal ? (
+          <Button onClick={() => handleRemove()}>remove</Button>
+        ) : (
+          <br />
+        )}
       </div>
-      <Comments blog={blog} /> 
-    </div>
+      <Comments blog={blog} />
+    </Box>
   )
 }
 

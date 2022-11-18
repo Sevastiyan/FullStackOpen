@@ -43,9 +43,9 @@ export const createBlog = (blogObject) => {
     console.log('🚀 newBlog', newBlog)
     dispatch(addBlog(newBlog))
     try {
-      dispatch(notify({ message: `${blogObject.title} was added` }, 2))
+      dispatch(notify({ message: `${blogObject.title} was added` }, 4))
     } catch (error) {
-      dispatch(notify({ message: 'Title or Url missing', type: 'error' }, 3))
+      dispatch(notify({ message: 'Title or Url missing', type: 'error' }, 4))
       console.log('Error: ', error)
     }
   }

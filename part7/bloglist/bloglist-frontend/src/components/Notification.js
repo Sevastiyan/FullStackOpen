@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import '../index.css'
+import { Alert } from '@mui/material'
 
 const Notification = () => {
 
@@ -15,9 +16,9 @@ const Notification = () => {
   console.log('Notificaiton type: ', type)
 
   if (type === 'error') {
-    return <div className="error">{message}</div>
+    return <Alert className="error">{message}</Alert>
   } else {
-    return <div className="success">{message}</div>
+    return <Alert className="success">{message}</Alert>
   }
 }
 

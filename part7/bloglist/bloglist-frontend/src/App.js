@@ -10,6 +10,7 @@ import BlogList from './components/BlogList'
 import UserList from './components/UserList'
 import User from './components/User'
 import Blog from './components/Blog'
+import { Container, Button, Typography, } from '@mui/material'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -46,39 +47,33 @@ const App = () => {
   }
 
   return (
-    <div>
-      <div>
-        <div>
-          <Link style={{ padding: 5 }} to="/">
-            home
-          </Link>
-          <Link style={{ padding: 5 }} to="/users">
-            users
-          </Link>
-          Logged in as {user.name}
-          <button id="logout-button" onClick={handleLogOut}>
-            logout
-          </button>
-        </div>
-        <Notification />
-        <h2>Blogs App</h2>
-        <Routes>
-          <Route path="/" element={<BlogList />} />
-          <Route path="/users" element={<UserList />} />
-          <Route path="/users/:id" element={<User user={userToDisplay} />} />
-          <Route
-            path="/blogs/:id"
-            element={
-              blogToDisplay ? (
-                <Blog blog={blogToDisplay} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-        </Routes>
-      </div>
-    </div>
+    <Container>
+      <Link style={{ padding: 5 }} to="/">
+        <Typography>home</Typography>
+      </Link>
+      <Link style={{ padding: 5 }} to="/users">
+        <Typography>users</Typography>
+      </Link>
+      <Button id="logout-button" onClick={handleLogOut}>
+        logout
+      </Button>
+      <Typography>Logged in as {user.name}</Typography>
+      <Notification />
+      <Typography variant="h3" component="h3">
+        Blogs App
+      </Typography>
+      <Routes>
+        <Route path="/" element={<BlogList />} />
+        <Route path="/users" element={<UserList />} />
+        <Route path="/users/:id" element={<User user={userToDisplay} />} />
+        <Route
+          path="/blogs/:id"
+          element={
+            blogToDisplay ? <Blog blog={blogToDisplay} /> : <Navigate to="/" />
+          }
+        />
+      </Routes>
+    </Container>
   )
 }
 

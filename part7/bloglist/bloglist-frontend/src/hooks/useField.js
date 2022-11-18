@@ -10,7 +10,7 @@ const useField = (type, id) => {
   return {
     id: id,
     type,
-    placeholder: id,
+    label: id,
     value,
     onChange,
     setValue

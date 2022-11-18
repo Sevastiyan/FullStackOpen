@@ -1,13 +1,14 @@
 const router = require('express').Router()
-const jwt = require('jsonwebtoken')
-const logger = require('../utils/logger')
+const blog = require('../models/blog')
 const Blog = require('../models/blog')
-const User = require('../models/user')
+const Comment = require('../models/comment')
+const logger = require('../utils/logger')
 
 router.get('/', async (request, response) => {
-  const notes = await Blog
+  const notes = await Blog.find({})
     .find({})
-    .find({}).populate('user', { username: 1, name: 1 })
+    .populate('user', { username: 1, name: 1 })
+    .populate('comments', { content: 1 })
 
   response.json(notes)
 })
@@ -21,7 +22,7 @@ router.post('/', async (request, response) => {
   const blog = new Blog({
     ...request.body,
     user: user,
-    likes: request.body.likes ? request.body.likes : 0
+    likes: request.body.likes ? request.body.likes : 0,
   })
 
   const savedBlog = await blog.save()
@@ -34,17 +35,19 @@ router.post('/', async (request, response) => {
 
 router.delete('/:id', async (request, response) => {
   const blogToDelete = await Blog.findById(request.params.id)
-  
-  if (!blogToDelete ) {
+
+  if (!blogToDelete) {
     return response.status(204).end()
   }
-  
-  if ( blogToDelete.user && blogToDelete.user.toString() !== request.user.id ) {
-    console.log('No access to Blog', blogToDelete.user);
+
+  if (blogToDelete.user && blogToDelete.user.toString() !== request.user.id) {
+    console.log('No access to Blog', blogToDelete.user)
     return response.status(401).json({
-      error: 'only the creator can delete a blog'
+      error: 'only the creator can delete a blog',
     })
   }
+
+  logger.info(blogToDelete.comments._id)
 
   await Blog.findByIdAndRemove(request.params.id)
 
@@ -52,15 +55,27 @@ router.delete('/:id', async (request, response) => {
 })
 
 router.put('/:id', async (request, response) => {
-  const blog = request.body
+  const body = request.body
 
-  const updatedBlog = await Blog
-    .findByIdAndUpdate(
-      request.params.id, 
-      blog, 
-      { new: true, runValidators: true, context: 'query' }
-    ).populate('user', { username: 1, name: 1 })
   
+  const blog = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes || 0,
+  }
+  
+  logger.info('Blog to update', blog)
+  
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
+    new: true,
+    runValidators: true,
+    context: 'query',
+  })
+  .populate('user', { username: 1, name: 1 })
+  .populate('comments', { content: 1 })
+  
+  logger.info('Updated Blog', updatedBlog)
   response.json(updatedBlog)
 })
 

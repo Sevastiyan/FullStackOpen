@@ -12,17 +12,9 @@ const User = ({ user }) => {
     <div key={user.id}>
       {blogsToDisplay.map((blog) => (
         <div key={blog.id} className="blogList">
-          <table>
-            <tbody>
-              <tr>
-                <Link to={`/blogs/${blog.id}`}>
-                  <td>
-                    <h3>{blog.title}</h3>
-                  </td>
-                </Link>
-              </tr>
-            </tbody>
-          </table>
+          <Link to={`/blogs/${blog.id}`}>
+            <h3>{blog.title}</h3>
+          </Link>
         </div>
       ))}
     </div>

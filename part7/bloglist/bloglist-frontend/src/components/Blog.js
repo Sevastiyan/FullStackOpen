@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog, removeBlog } from '../reducers/blogReducer'
 import { notify } from '../reducers/notificationReducer'
+import Comments from './Comments'
 
 const Blog = ({ blog }) => {
   const blogStyle = {
@@ -13,6 +14,8 @@ const Blog = ({ blog }) => {
   const dispatch = useDispatch()
   const { user } = useSelector((store) => store)
   const isPersonal = blog.user.username === user.username
+
+
 
   const handleLike = async () => {
     try {
@@ -39,22 +42,24 @@ const Blog = ({ blog }) => {
   }
 
   return (
-    <div id="blog" style={blogStyle} className="blogDetails">
-      <h1 className="title">Title: {blog.title}</h1>
-      <p className="author">Author: {blog.author}</p>
-      Likes: {blog.likes}
-      <button onClick={() => handleLike()}>like</button>
-
-      <p className="url">url: {blog.url}</p>
-      <div>
-        {isPersonal ? (
-          <div>
-            <button onClick={() => handleRemove()}>remove</button>
-          </div>
-        ) : (
-          <br />
-        )}
+    <div>
+      <div id="blog" style={blogStyle} className="blogDetails">
+        <h1 className="title">Title: {blog.title}</h1>
+        <p className="author">Author: {blog.author}</p>
+        Likes: {blog.likes}
+        <button onClick={() => handleLike()}>like</button>
+        <p className="url">url: {blog.url}</p>
+        <div>
+          {isPersonal ? (
+            <div>
+              <button onClick={() => handleRemove()}>remove</button>
+            </div>
+          ) : (
+            <br />
+          )}
+        </div>
       </div>
+      <Comments blog={blog} /> 
     </div>
   )
 }

@@ -49,13 +49,13 @@ const deleteBlog = async (blogToDelete) => {
   return response.data
 }
 
-const addComment = async (comment, blog) => {
+const addComment = async (id, comment) => {
   const data = {
     comment,
-    blog,
+    blog: id,
   }
 
-  const response = await axios.post(baseUrl, data)
+  const response = await axios.post(`${baseUrl}/${id}/comments`, data)
   return response.data
 }
 

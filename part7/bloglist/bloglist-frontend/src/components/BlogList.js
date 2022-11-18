@@ -39,17 +39,9 @@ const BlogList = () => {
       <div>
         {blogs.map((blog) => (
           <div key={blog.id} className="blogList">
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <Link to={`/blogs/${blog.id}`}>
-                      <h3>{blog.title}</h3>
-                    </Link>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <Link to={`/blogs/${blog.id}`}>
+              <h3>{blog.title}</h3>
+            </Link>
           </div>
         ))}
       </div>

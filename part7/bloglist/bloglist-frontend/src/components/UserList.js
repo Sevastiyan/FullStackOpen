@@ -24,9 +24,7 @@ const UserList = () => {
 
           {users.map((user) => (
             <tr key={user.id}>
-              <td>
-                <Link to={`/users/${user.id}`}>{user.username}</Link>
-              </td>
+              <Link to={`/users/${user.id}`}>{user.username}</Link>
               <td>{reduceBlogs(user)}</td>
             </tr>
           ))}

@@ -2,14 +2,14 @@
 A robust course that introduces the principles of modern JavaScript-based web development. The main focus is on building single page applications with ReactJS that use REST APIs built with Node.js. The course material also covers _Redux, MongoDB, Postman, Cypress, GraphQL, and TypeScript_.
 
 - [Course information](https://www.helsinki.fi/en/admissions-and-education/open-university/multidisciplinary-themed-modules/full-stack)
-- [Course material](https://fullstackopen.com/en/)
+- [Course material](https://fullstackopen.com/en/part0/general_info)
 
 ## What is inside this Repository: 
 
 The repository contains my implementation and solutions to the exercises of the course. 
 
 ## Certificate
-
+![Cert](https://studies.cs.helsinki.fi/stats/api/certificate/fullstackopen/en/7451be4ec49c3f6bac8f9ad54f857dbf)
 
 ## 🌟 Part 1 - [Introduction to React](https://fullstackopen.com/en/part1)
 

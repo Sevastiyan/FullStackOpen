@@ -6,7 +6,7 @@ A robust course that introduces the principles of modern JavaScript-based web de
 
 ## What is inside this Repository: 
 
-The repository contains my implementation and solutions to the exercises of the course. 
+The repository contains my implementation and solutions to the exercises of the course. Each part has a readme with the material covered and includes the solutions to the exercises of each part. Either click through the files or follow the links in this readme.
 
 ## Certificate
 [![Cert](part0/certificate-fullstack.png)](https://studies.cs.helsinki.fi/stats/api/certificate/fullstackopen/en/7451be4ec49c3f6bac8f9ad54f857dbf)

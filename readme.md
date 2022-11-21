@@ -9,14 +9,13 @@ A robust course that introduces the principles of modern JavaScript-based web de
 The repository contains my implementation and solutions to the exercises of the course. 
 
 ## Certificate
-![Cert](https://studies.cs.helsinki.fi/stats/api/certificate/fullstackopen/en/7451be4ec49c3f6bac8f9ad54f857dbf)
 
 
 ## 🌟 Part 1 - [Introduction to React](https://fullstackopen.com/en/part1)
 
 Introduction to _JavaScript_ and _React_ by covering basic concepts such as components, props, JSX, including core functionalities, such as (`.map()`,`.reduce()`, `.filter()`), event handlers, hooks etc.
 
-[Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part1)
+[_Solutions Folder_](https://github.com/Sevastiyan/FullStackOpen/tree/main/part1)
 
 - [courseinfo](https://github.com/Sevastiyan/FullStackOpen/tree/main/part1/courseinfo) - Simple React application that counts total number of exercises of a given course.
 - [unicafe](https://github.com/Sevastiyan/FullStackOpen/tree/main/part1/unicafe) - Feedback generator with simple statistics calculator.
@@ -25,6 +24,8 @@ Introduction to _JavaScript_ and _React_ by covering basic concepts such as comp
 ## 📱 Part 2 - [Communicating with server](https://fullstackopen.com/en/part1)
 
 Introduction to simple _JSON server_, that handles simple CRUD operations using _axios_ to send `GET`, `PUT`, `POST` and `DELETE`, requests.
+
+[_Source Folder_](https://github.com/Sevastiyan/FullStackOpen/tree/main/part2)
 
 - [courseinfo](https://github.com/Sevastiyan/FullStackOpen/tree/main/part2/courseinfo) - continuation from part 1.
 - [phonebook](https://github.com/Sevastiyan/FullStackOpen/tree/main/part2/phonebook) - A simple application that adds/deletes/edits contact information.
@@ -35,7 +36,7 @@ Introduction to simple _JSON server_, that handles simple CRUD operations using 
 
 Introduction to backend development using _Node.js_ and _Express.js_ building _REST APIs_, and connect to _MongoDB - Atlas_ to store information. It also introduces the deployment of applicaions on _Heroku_ or _Fly.io_
 
-[Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part3)
+[_Solutions Folder_](https://github.com/Sevastiyan/FullStackOpen/tree/main/part3)
 
 - [phonebook backend](https://github.com/Sevastiyan/FullStackOpen/tree/main/part3/backend) - The backend of the of the application in part2. Handling requests for _CRUD_ operations.
 - [phonebook frontend](https://github.com/Sevastiyan/FullStackOpen/tree/main/part3/phonebook) - The build of the application, when being deployed on the internet with either _Heroku_, or _Fly.io_
@@ -74,9 +75,9 @@ Introducing _React Router_ for navigation, how to create _Custom Hooks_ and diff
 - [routed-anecdotes](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7/routed-anecdotes) - Expanding on the anecdotes app from Part1, by creating a simple navigation pannel.
 - [country-hook](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7/country-hook) - Expanding on the country app from Part2, by creating custom hooks to control user input and fetching data.
 - [ultimate-hooks](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7/ultimate-hooks) - Creating custom hooks for 
-- [bloglist-final]() - Source folder
-    - [bloglist-backend]() - 
-    - [bloglist-frontend]() - 
+- [bloglist-final](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7/bloglist) - Source folder
+    - [bloglist-backend]()
+    - [bloglist-frontend]()
 
 [Solutions Folder](https://github.com/Sevastiyan/FullStackOpen/tree/main/part7)
 

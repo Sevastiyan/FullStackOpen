@@ -11,7 +11,6 @@ The repository contains my implementation and solutions to the exercises of the 
 ## Certificate
 
 
-
 ## 🌟 Part 1 - [Introduction to React](https://fullstackopen.com/en/part1)
 
 Introduction to _JavaScript_ and _React_ by covering basic concepts such as components, props, JSX, including core functionalities, such as (`.map()`,`.reduce()`, `.filter()`), event handlers, hooks etc.
